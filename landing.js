@@ -5,7 +5,7 @@ function renderPage(prospect) {
 
   // Greeting
   document.getElementById('lp-greeting').textContent = firstName ? `Hi, ${firstName} 👋` : 'Hi 👋';
-  document.title = firstName ? `OAI — A Personal Note For ${firstName}` : 'OAI — A Personal Note For You';
+  document.title = firstName ? `OAI — A Personal Note For ${firstName}` : 'Outreach System for Recruiters';
 
   // Headline company
   document.getElementById('lp-company-inline').textContent = company || 'You';
