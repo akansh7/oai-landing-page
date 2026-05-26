@@ -29,15 +29,45 @@ function showDashboard() {
   document.getElementById('adm-auth').style.display = 'none';
   document.getElementById('adm-dashboard').style.display = 'block';
   loadProspects();
+  renderCurlBlock();
+}
+
+function renderCurlBlock() {
+  const base = window.location.origin;
+  document.getElementById('adm-base-url').textContent = base + '/';
+  const cmd = `curl -X POST '${window.SUPABASE_URL}/rest/v1/prospects' \\
+  -H 'apikey: ${window.SUPABASE_ANON_KEY}' \\
+  -H 'Authorization: Bearer ${window.SUPABASE_ANON_KEY}' \\
+  -H 'Content-Type: application/json' \\
+  -H 'Prefer: return=representation' \\
+  -d '{
+    "name": "Sarah Johnson",
+    "company_name": "Acme Corp",
+    "logo_url": null,
+    "video_url": null,
+    "calendar_url": null
+  }'`;
+  document.getElementById('adm-curl-block').textContent = cmd;
+}
+
+function copyCurl() {
+  const text = document.getElementById('adm-curl-block').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('adm-copy-curl');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
 }
 
 // ─── Supabase helpers ─────────────────────────────
 
-const headers = () => ({
-  'apikey': window.SUPABASE_ANON_KEY,
-  'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}`,
-  'Content-Type': 'application/json',
-});
+function headers() {
+  return {
+    'apikey': window.SUPABASE_ANON_KEY,
+    'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json',
+  };
+}
 
 async function sbFetch(path, options = {}) {
   const res = await fetch(`${window.SUPABASE_URL}/rest/v1/${path}`, {
