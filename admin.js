@@ -43,9 +43,7 @@ function renderCurlBlock() {
   -d '{
     "name": "Sarah Johnson",
     "company_name": "Acme Corp",
-    "logo_url": null,
-    "video_url": null,
-    "calendar_url": null
+    "logo_url": null
   }'`;
   document.getElementById('adm-curl-block').textContent = cmd;
 }
@@ -168,8 +166,6 @@ function openModal(id = null) {
   document.getElementById('form-name').value = '';
   document.getElementById('form-company').value = '';
   document.getElementById('form-logo').value = '';
-  document.getElementById('form-video').value = '';
-  document.getElementById('form-calendar').value = '';
 
   if (id) {
     const p = prospects.find(x => x.id === id);
@@ -179,8 +175,6 @@ function openModal(id = null) {
     document.getElementById('form-name').value = p.name || '';
     document.getElementById('form-company').value = p.company_name || '';
     document.getElementById('form-logo').value = p.logo_url || '';
-    document.getElementById('form-video').value = p.video_url || '';
-    document.getElementById('form-calendar').value = p.calendar_url || '';
   } else {
     title.textContent = 'New Prospect';
   }
@@ -202,11 +196,9 @@ async function saveProspect() {
   const name = document.getElementById('form-name').value.trim();
   const company_name = document.getElementById('form-company').value.trim();
   const logo_url = document.getElementById('form-logo').value.trim() || null;
-  const video_url = document.getElementById('form-video').value.trim() || null;
-  const calendar_url = document.getElementById('form-calendar').value.trim() || null;
 
-  if (!name || !company_name) {
-    alert('Name and Company Name are required.');
+  if (!name && !company_name && !logo_url) {
+    alert('Please fill in at least one field.');
     return;
   }
 
@@ -215,7 +207,7 @@ async function saveProspect() {
   saveBtn.disabled = true;
 
   try {
-    const payload = { name, company_name, logo_url, video_url, calendar_url };
+    const payload = { name, company_name, logo_url };
 
     if (id) {
       await sbFetch(`prospects?id=eq.${id}`, {

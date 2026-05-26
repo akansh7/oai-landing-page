@@ -54,20 +54,23 @@ body {
   height: 32px;
   width: auto;
   object-fit: contain;
+  display: block;
 }
 
 .lp-divider {
   color: var(--ink-muted);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 300;
-  line-height: 1;
+  line-height: 32px;
+  display: block;
 }
 
 .lp-prospect-logo {
-  height: 28px;
+  height: 32px;
   width: auto;
   object-fit: contain;
-  max-width: 120px;
+  max-width: 140px;
+  display: block;
 }
 
 .lp-prospect-name-fallback {
@@ -75,6 +78,8 @@ body {
   font-weight: 600;
   font-size: 15px;
   color: var(--ink);
+  line-height: 32px;
+  display: block;
 }
 
 .lp-main {

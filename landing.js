@@ -28,17 +28,8 @@ function renderPage(prospect) {
     document.querySelector('.lp-divider').style.display = 'none';
   }
 
-  // Video
-  if (prospect.video_url) {
-    const embedUrl = resolveEmbedUrl(prospect.video_url);
-    if (embedUrl) {
-      document.getElementById('lp-video-container').innerHTML =
-        `<iframe src="${embedUrl}" allowfullscreen allow="autoplay; fullscreen"></iframe>`;
-    }
-  }
-
   // CTA buttons
-  const calUrl = prospect.calendar_url || 'https://calendly.com/michael-qq8/30-minute-consultation';
+  const calUrl = 'https://calendly.com/michael-qq8/30-minute-consultation';
   ['lp-cta-btn', 'lp-cta-end-btn'].forEach(id => {
     const btn = document.getElementById(id);
     if (!btn) return;
@@ -57,27 +48,6 @@ function makeFallbackName(name) {
   return span;
 }
 
-function resolveEmbedUrl(url) {
-  try {
-    const u = new URL(url);
-    if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
-      let videoId = u.searchParams.get('v');
-      if (!videoId && u.hostname === 'youtu.be') videoId = u.pathname.slice(1);
-      if (!videoId) {
-        const match = u.pathname.match(/embed\/([^/?]+)/);
-        if (match) videoId = match[1];
-      }
-      return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1` : url;
-    }
-    if (u.hostname.includes('loom.com')) {
-      const match = u.pathname.match(/share\/([^/?]+)/);
-      if (match) return `https://www.loom.com/embed/${match[1]}`;
-    }
-    return url;
-  } catch {
-    return null;
-  }
-}
 
 (async () => {
   const id = new URLSearchParams(window.location.search).get('id');
