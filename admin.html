@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAI Outreach Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="config.js"></script>
+</head>
+<body class="adm-body">
+
+  <!-- Auth screen -->
+  <div id="adm-auth" class="adm-auth">
+    <div class="adm-auth-card">
+      <div class="adm-auth-logo">OAI</div>
+      <p class="adm-auth-sub">Outreach Dashboard — Team Access</p>
+      <input type="password" id="adm-passcode" class="adm-input" placeholder="Enter passcode" autocomplete="current-password" />
+      <button class="adm-btn adm-btn-primary" onclick="checkAuth()">Unlock →</button>
+      <p class="adm-auth-error" id="adm-auth-error">Incorrect passcode. Try again.</p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="adm-dashboard" style="display:none">
+
+    <header class="adm-header">
+      <span class="adm-header-logo">OAI Outreach</span>
+      <div class="adm-header-right">
+        <button class="adm-btn adm-btn-primary" onclick="openModal()">+ New Prospect</button>
+        <button class="adm-logout" onclick="logout()">Log out</button>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <!-- Stats -->
+      <div class="adm-stats">
+        <div class="adm-stat">
+          <div class="adm-stat-value" id="stat-total">—</div>
+          <div class="adm-stat-label">Total Prospects</div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-value" id="stat-visits">—</div>
+          <div class="adm-stat-label">Total Visits</div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-value" id="stat-viewed">—</div>
+          <div class="adm-stat-label">Pages Viewed</div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="adm-card">
+        <div class="adm-card-header">
+          <span class="adm-card-title">Prospects</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Link</th>
+              <th>Visits</th>
+              <th>Last Visited</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adm-table-body">
+            <tr><td colspan="6" class="adm-empty">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="adm-modal-overlay" id="adm-modal-overlay">
+    <div class="adm-modal">
+      <div class="adm-modal-header">
+        <span class="adm-modal-title" id="adm-modal-title">New Prospect</span>
+        <button class="adm-modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="adm-modal-body">
+        <input type="hidden" id="form-id" />
+        <div class="adm-form-group">
+          <label class="adm-label">Name <span>*</span></label>
+          <input type="text" id="form-name" class="adm-input" placeholder="Sarah Johnson" />
+        </div>
+        <div class="adm-form-group">
+          <label class="adm-label">Company Name <span>*</span></label>
+          <input type="text" id="form-company" class="adm-input" placeholder="Acme Corp" />
+        </div>
+        <div class="adm-form-group">
+          <label class="adm-label">Logo URL <span>(optional)</span></label>
+          <input type="url" id="form-logo" class="adm-input" placeholder="https://acme.com/logo.png" />
+        </div>
+        <div class="adm-form-group">
+          <label class="adm-label">Video URL <span>(optional — YouTube or Loom)</span></label>
+          <input type="url" id="form-video" class="adm-input" placeholder="https://loom.com/share/..." />
+        </div>
+        <div class="adm-form-group">
+          <label class="adm-label">Calendar URL <span>(optional)</span></label>
+          <input type="url" id="form-calendar" class="adm-input" placeholder="https://cal.com/yourname" />
+        </div>
+      </div>
+      <div class="adm-modal-footer">
+        <button class="adm-btn adm-btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="adm-btn adm-btn-primary" id="adm-save-btn" onclick="saveProspect()">Save Prospect</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

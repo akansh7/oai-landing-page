@@ -1,0 +1,2 @@
+window.SUPABASE_URL = 'https://xbgnypymysxplpuesifo.supabase.co';
+window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZ255cHlteXN4cGxwdWVzaWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0Mjg1NzQsImV4cCI6MjA5NTAwNDU3NH0.7OlssEyNJjgcHEcAybFHKzZBfQaj7HCYackcIB3H8rM';

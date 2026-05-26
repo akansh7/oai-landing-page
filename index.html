@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAI — A Personal Note For You</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="lp-header" id="lp-header">
+    <div class="lp-header-inner">
+      <img src="oai-logo.png" alt="OAI" class="lp-oai-logo-img" />
+      <span class="lp-divider">×</span>
+      <span id="prospect-logo-area"></span>
+    </div>
+  </header>
+
+  <!-- Main content (hidden until loaded) -->
+  <main class="lp-main" id="lp-main" style="display:none">
+
+    <!-- Greeting + Headline -->
+    <section class="lp-hero">
+
+      <!-- Social proof bar -->
+      <div class="lp-social-proof">
+        <div class="lp-avatars">
+          <img src="avatar-2.png" alt="Client" class="lp-avatar lp-avatar-1" />
+          <img src="avatar-1.png" alt="Client" class="lp-avatar lp-avatar-2" />
+        </div>
+        <div class="lp-proof-text">
+          <div class="lp-stars">★★★★★</div>
+          <p>Trusted by 50+ Recruitment &amp; Staffing Firms to Build Their Outreach Infrastructure</p>
+        </div>
+      </div>
+
+      <p class="lp-greeting" id="lp-greeting">Hi, … 👋</p>
+      <h1 class="lp-headline" id="lp-headline">
+        Build a Signal-Driven Outreach System That Puts <span id="lp-company-inline">Your Company</span> in Front of Decision Makers with Hiring Intent
+      </h1>
+    </section>
+
+    <!-- Video -->
+    <div class="lp-video-wrap">
+      <div class="lp-video-container" id="lp-video-container">
+        <div class="lp-video-placeholder">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="28" fill="white" fill-opacity="0.08"/>
+            <path d="M23 20L37 28L23 36V20Z" fill="white"/>
+          </svg>
+          <span>Video coming soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="lp-cta-wrap">
+      <a href="#" class="lp-cta-btn" id="lp-cta-btn">
+        Grab a FREE Consultation →
+      </a>
+      <p class="lp-cta-sub">No pressure. 30 minutes. Real strategy.</p>
+    </div>
+
+
+    <!-- Social Proof Slider -->
+    <section class="lp-proof-section">
+      <div class="lp-proof-inner">
+        <h2 class="lp-proof-heading">Trusted by Staffing and Recruitment Professionals Who Get Results</h2>
+        <p class="lp-proof-subhead">See How Other Staffing and Recruitment Agencies Are Scaling Their Businesses</p>
+
+        <div class="lp-slider">
+          <button class="lp-slider-btn lp-slider-prev" id="lp-prev" aria-label="Previous">&#8592;</button>
+          <div class="lp-slider-viewport">
+            <div class="lp-slider-track" id="lp-slider-track">
+              <div class="lp-slide"><img src="proof-7.png" alt="Client result" /></div>
+              <div class="lp-slide"><img src="proof-8.png" alt="Client result" /></div>
+              <div class="lp-slide"><img src="proof-9.png" alt="Client result" /></div>
+              <div class="lp-slide"><img src="proof-12.png" alt="Client result" /></div>
+              <div class="lp-slide"><img src="proof-13.png" alt="Client result" /></div>
+            </div>
+          </div>
+          <button class="lp-slider-btn lp-slider-next" id="lp-next" aria-label="Next">&#8594;</button>
+        </div>
+
+        <div class="lp-slider-dots" id="lp-dots"></div>
+      </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="lp-pain">
+      <div class="lp-pain-inner">
+        <h2 class="lp-pain-heading">Working Hard on Outreach, <span>But Still Starving for Job Orders?</span></h2>
+        <p class="lp-pain-body">Having good recruiters isn't the problem. Without a system that detects hiring demand and routes it to the right decision-makers, effort doesn't translate into job orders.</p>
+        <div class="lp-pills">
+          <span class="lp-pill">Hiring demand isn't visible in real time</span>
+          <span class="lp-pill">Quality job orders surface too late</span>
+          <span class="lp-pill">Decision-makers aren't engaged at the right moment</span>
+          <span class="lp-pill">Outreach lacks hiring context</span>
+          <span class="lp-pill">Follow-ups break without automation</span>
+          <span class="lp-pill">No feedback loop to improve targeting</span>
+          <span class="lp-pill">ATS stays light on fresh requisitions</span>
+          <span class="lp-pill">Fill rates drop despite strong candidate flow</span>
+          <span class="lp-pill">Job order volume is unpredictable</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="lp-features">
+      <div class="lp-features-inner">
+        <h2 class="lp-features-heading">We Handle Everything While You Focus on <span>Candidate Submissions and Placement Fees</span></h2>
+        <div class="lp-features-grid">
+          <div class="lp-feature-card">
+            <div class="lp-feature-icon">✏️</div>
+            <h3>Custom Clay Based Req Generation Workflow</h3>
+            <p>We build a sophisticated data pipeline tailored specifically to your placement niche and ideal clients.</p>
+          </div>
+          <div class="lp-feature-card">
+            <div class="lp-feature-icon">👥</div>
+            <h3>Automated Requisition Tracking</h3>
+            <p>We monitor 35+ sources to identify companies with open headcount for the roles you specialize in filling.</p>
+          </div>
+          <div class="lp-feature-card">
+            <div class="lp-feature-icon">💬</div>
+            <h3>Hiring Authority Identification</h3>
+            <p>We bypass gatekeepers to connect you with executives and managers who can submit job orders.</p>
+          </div>
+          <div class="lp-feature-card">
+            <div class="lp-feature-icon">📅</div>
+            <h3>Relevant Outreach</h3>
+            <p>Our proven messages get responses because they showcase your specialty niche expertise and placement success rate.</p>
+          </div>
+          <div class="lp-feature-card">
+            <div class="lp-feature-icon">📈</div>
+            <h3>Job Order Scheduling</h3>
+            <p>When hiring managers show interest, we handle the back and forth to get req discussions on your calendar.</p>
+          </div>
+          <div class="lp-feature-card">
+            <div class="lp-feature-icon">✅</div>
+            <h3>Fill Rate Optimization</h3>
+            <p>We continuously test and refine your messaging and targeting to maximize your placement-to-interview ratio.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Ending Card -->
+    <section class="lp-cta-end-wrap">
+      <div class="lp-cta-end-card">
+        <h2 class="lp-cta-end-heading">Ready to Transform Your Job Order Pipeline?</h2>
+        <p class="lp-cta-end-sub">Let's Discuss How We Can Bring You Qualified Meetings with Hiring Managers Who Need Your Candidates Yesterday</p>
+        <a href="https://calendly.com/michael-qq8/30-minute-consultation" target="_blank" rel="noopener noreferrer" class="lp-cta-end-btn" id="lp-cta-end-btn">Book A Strategy Call</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Error state -->
+  <div class="lp-error" id="lp-error" style="display:none">
+    <h1>Link not found</h1>
+    <p>This link may be invalid or expired.<br/>Reach out to us directly if you think this is a mistake.</p>
+  </div>
+
+  <script src="landing.js"></script>
+</body>
+</html>
