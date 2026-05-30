@@ -1,12 +1,52 @@
-function openDlModal() {
+let _dlTimer = null;
+let _dlUrl = '';
+
+function openDlModal(downloadUrl) {
+  _dlUrl = downloadUrl;
   document.getElementById('dl-modal-overlay').classList.add('open');
+  document.getElementById('dl-ready-badge').classList.remove('visible');
   document.body.style.overflow = 'hidden';
+  startDlCountdown();
 }
 
 function closeDlModal(e) {
   if (e && e.target !== e.currentTarget) return;
   document.getElementById('dl-modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  if (_dlTimer) { clearInterval(_dlTimer); _dlTimer = null; }
+}
+
+function startDlCountdown() {
+  const total = Math.floor(Math.random() * 31) + 60; // 60–90 seconds
+  let remaining = total;
+  const circumference = 2 * Math.PI * 34; // r=34
+  const ring = document.getElementById('dl-ring-fill');
+  const timerText = document.getElementById('dl-timer-text');
+
+  ring.style.strokeDasharray = circumference;
+
+  function tick() {
+    const mins = Math.floor(remaining / 60);
+    const secs = String(remaining % 60).padStart(2, '0');
+    timerText.textContent = `${mins}:${secs}`;
+    const progress = remaining / total;
+    ring.style.strokeDashoffset = circumference * (1 - progress);
+
+    if (remaining <= 0) {
+      clearInterval(_dlTimer);
+      _dlTimer = null;
+      timerText.textContent = '0:00';
+      ring.style.strokeDashoffset = circumference;
+      document.getElementById('dl-ready-badge').classList.add('visible');
+      document.getElementById('dl-modal-hint').textContent = 'Your list is ready! Click below to download.';
+      window.open(_dlUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    remaining--;
+  }
+
+  tick();
+  _dlTimer = setInterval(tick, 1000);
 }
 
 function renderPage(prospect) {
@@ -51,8 +91,7 @@ function renderPage(prospect) {
 
       dlBtn.addEventListener('click', e => {
         e.preventDefault();
-        window.open(prospect.download_url, '_blank', 'noopener,noreferrer');
-        openDlModal();
+        openDlModal(prospect.download_url);
       });
     }
   }

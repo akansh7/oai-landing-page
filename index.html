@@ -205,11 +205,38 @@
 
       <div class="dl-modal-divider"></div>
 
-      <p class="dl-modal-hint">Your list will be ready by the time the video ends.</p>
+      <!-- Countdown timer -->
+      <div class="dl-timer-wrap">
+        <svg width="0" height="0" style="position:absolute">
+          <defs>
+            <linearGradient id="dl-ring-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#6366F1"/>
+              <stop offset="100%" stop-color="#C084FC"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <svg class="dl-timer-ring" viewBox="0 0 80 80">
+          <circle class="dl-ring-bg" cx="40" cy="40" r="34"/>
+          <circle class="dl-ring-fill" id="dl-ring-fill" cx="40" cy="40" r="34"/>
+        </svg>
+        <span class="dl-timer-text" id="dl-timer-text">1:30</span>
+      </div>
 
-      <a href="#lp-video" class="dl-watch-btn" id="dl-watch-btn" onclick="closeDlModal()">
-        <span>Watch Now →</span>
-      </a>
+      <p class="dl-modal-hint" id="dl-modal-hint">Watch the video while your list is being prepared.</p>
+
+      <!-- Watch Now + Ready badge row -->
+      <div class="dl-btn-row">
+        <a href="#lp-video" class="dl-watch-btn" id="dl-watch-btn" onclick="closeDlModal()">
+          <span>Watch Now →</span>
+        </a>
+        <div class="dl-ready-badge" id="dl-ready-badge">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="8" fill="#22C55E"/>
+            <path d="M4.5 8l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Ready to Download</span>
+        </div>
+      </div>
     </div>
   </div>
 
