@@ -1,3 +1,14 @@
+function openDlModal() {
+  document.getElementById('dl-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDlModal(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('dl-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function renderPage(prospect) {
   const fullName = prospect.name?.trim();
   const firstName = fullName ? fullName.split(' ')[0] : null;
@@ -34,12 +45,15 @@ function renderPage(prospect) {
   if (dlBtn) {
     if (prospect.download_url) {
       dlBtn.querySelector('span').textContent = `List for ${firstName || 'You'}`;
-      dlBtn.href = prospect.download_url;
-      dlBtn.target = '_blank';
-      dlBtn.rel = 'noopener noreferrer';
       dlBtn.style.display = '';
       const callout = calloutWrap ? calloutWrap.querySelector('.lp-download-callout') : null;
       if (callout) callout.style.display = '';
+
+      dlBtn.addEventListener('click', e => {
+        e.preventDefault();
+        window.open(prospect.download_url, '_blank', 'noopener,noreferrer');
+        openDlModal();
+      });
     }
   }
 
