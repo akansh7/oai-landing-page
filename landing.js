@@ -28,6 +28,21 @@ function renderPage(prospect) {
     document.querySelector('.lp-divider').style.display = 'none';
   }
 
+  // Download button
+  const dlBtn = document.getElementById('lp-download-btn');
+  const calloutWrap = document.querySelector('.lp-download-callout-wrap');
+  if (dlBtn) {
+    if (prospect.download_url) {
+      dlBtn.querySelector('span').textContent = `List for ${firstName || 'You'}`;
+      dlBtn.href = prospect.download_url;
+      dlBtn.target = '_blank';
+      dlBtn.rel = 'noopener noreferrer';
+      dlBtn.style.display = '';
+      const callout = calloutWrap ? calloutWrap.querySelector('.lp-download-callout') : null;
+      if (callout) callout.style.display = '';
+    }
+  }
+
   // CTA buttons
   const calUrl = 'https://calendly.com/michael-qq8/30-minute-consultation';
   ['lp-cta-btn', 'lp-cta-end-btn'].forEach(id => {

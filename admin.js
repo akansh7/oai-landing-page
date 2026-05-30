@@ -166,6 +166,7 @@ function openModal(id = null) {
   document.getElementById('form-name').value = '';
   document.getElementById('form-company').value = '';
   document.getElementById('form-logo').value = '';
+  document.getElementById('form-download-url').value = '';
 
   if (id) {
     const p = prospects.find(x => x.id === id);
@@ -175,6 +176,7 @@ function openModal(id = null) {
     document.getElementById('form-name').value = p.name || '';
     document.getElementById('form-company').value = p.company_name || '';
     document.getElementById('form-logo').value = p.logo_url || '';
+    document.getElementById('form-download-url').value = p.download_url || '';
   } else {
     title.textContent = 'New Prospect';
   }
@@ -196,6 +198,7 @@ async function saveProspect() {
   const name = document.getElementById('form-name').value.trim();
   const company_name = document.getElementById('form-company').value.trim();
   const logo_url = document.getElementById('form-logo').value.trim() || null;
+  const download_url = document.getElementById('form-download-url').value.trim() || null;
 
   if (!name && !company_name && !logo_url) {
     alert('Please fill in at least one field.');
@@ -207,7 +210,7 @@ async function saveProspect() {
   saveBtn.disabled = true;
 
   try {
-    const payload = { name, company_name, logo_url };
+    const payload = { name, company_name, logo_url, download_url };
 
     if (id) {
       await sbFetch(`prospects?id=eq.${id}`, {

@@ -217,6 +217,68 @@ body {
   text-align: center;
 }
 
+.lp-download-callout-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.lp-download-callout {
+  position: absolute;
+  right: 100%;
+  top: 28px;
+  transform: translateY(-50%);
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  animation: callout-glow 1.4s ease-in-out infinite alternate;
+}
+
+.lp-callout-text {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  font-weight: 600;
+  color: #EF4444;
+  white-space: nowrap;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.lp-callout-arrow {
+  width: 64px;
+  height: 32px;
+  display: block;
+  filter: drop-shadow(0 0 4px rgba(239,68,68,0.8));
+}
+
+@keyframes callout-glow {
+  from {
+    opacity: 0.55;
+    filter: drop-shadow(0 0 0px rgba(239,68,68,0));
+  }
+  to {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(239,68,68,0.9));
+  }
+}
+
+.lp-cta-btn-group {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lp-cta-btn-group .lp-cta-btn {
+  width: 100%;
+}
+
+.lp-cta-btn-group .lp-cta-btn span {
+  flex: 1;
+  text-align: center;
+}
+
 @property --r {
   syntax: '<angle>';
   inherits: false;
@@ -268,6 +330,19 @@ body {
   font-weight: 600;
   white-space: nowrap;
   color: #fff;
+}
+
+#lp-download-btn {
+  background: conic-gradient(from var(--r), #fff, #f8d7d7, #fff, #fca5a5, #fff);
+  animation: rotate-btn-gradient 3s linear infinite;
+}
+
+#lp-download-btn::after {
+  background: #DC2626;
+}
+
+#lp-download-btn:hover {
+  box-shadow: 0 8px 28px rgba(239,68,68,0.45);
 }
 
 .lp-cta-sub {

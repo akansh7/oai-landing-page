@@ -6,6 +6,7 @@
   <title>Outreach System for Recruiters</title>
   <link rel="icon" type="image/png" href="oai-logo.png" />
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet" />
   <script src="config.js"></script>
 </head>
 <body>
@@ -56,9 +57,23 @@
 
     <!-- CTA -->
     <div class="lp-cta-wrap">
-      <a href="#" class="lp-cta-btn" id="lp-cta-btn">
-        <span>Grab a FREE Consultation →</span>
-      </a>
+      <div class="lp-download-callout-wrap">
+        <div class="lp-download-callout" style="display:none">
+          <span class="lp-callout-text">Download your<br>List here</span>
+          <svg class="lp-callout-arrow" viewBox="0 0 64 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 16 Q20 4 50 16" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <path d="M44 10 L50 16 L44 22" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="lp-cta-btn-group">
+        <a href="#" class="lp-cta-btn" id="lp-download-btn" style="display:none">
+          <span>List for You</span>
+        </a>
+        <a href="#" class="lp-cta-btn" id="lp-cta-btn">
+          <span>Grab a FREE Consultation →</span>
+        </a>
+      </div>
+      </div>
       <p class="lp-cta-sub">No pressure. 30 minutes. Real strategy.</p>
     </div>
 
