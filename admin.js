@@ -43,7 +43,8 @@ function renderCurlBlock() {
   -d '{
     "name": "Sarah Johnson",
     "company_name": "Acme Corp",
-    "logo_url": null
+    "logo_url": null,
+    "download_url": "https://docs.google.com/..."
   }'`;
   document.getElementById('adm-curl-block').textContent = cmd;
 }

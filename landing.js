@@ -1,12 +1,34 @@
-function openDlModal() {
-  document.getElementById('dl-modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+function startDlTimer(downloadUrl, firstName) {
+  const btn = document.getElementById('lp-download-btn');
+  const btnText = document.getElementById('lp-download-btn-text');
+  const status = document.getElementById('lp-dl-status');
+  const total = Math.floor(Math.random() * 31) + 60; // 60–90 s
+  let remaining = total;
 
-function closeDlModal(e) {
-  if (e && e.target !== e.currentTarget) return;
-  document.getElementById('dl-modal-overlay').classList.remove('open');
-  document.body.style.overflow = '';
+  btn.classList.add('lp-download-btn--counting');
+  status.className = 'lp-dl-status lp-dl-status--fetching';
+  status.innerHTML = 'Fetching your leads from the database.<br>In the meantime, watch the short video above.';
+
+  function tick() {
+    const m = Math.floor(remaining / 60);
+    const s = String(remaining % 60).padStart(2, '0');
+    btnText.textContent = `${m}:${s}`;
+    remaining--;
+  }
+
+  tick();
+  const timer = setInterval(() => {
+    if (remaining < 0) {
+      clearInterval(timer);
+      btnText.textContent = `List for ${firstName || 'You'}`;
+      btn.classList.remove('lp-download-btn--counting');
+      btn.classList.add('lp-download-btn--ready');
+      status.className = 'lp-dl-status lp-dl-status--ready';
+      status.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="8" fill="#22C55E"/><path d="M4.5 8l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Your list is ready to download';
+    } else {
+      tick();
+    }
+  }, 1000);
 }
 
 function renderPage(prospect) {
@@ -44,15 +66,19 @@ function renderPage(prospect) {
   const calloutWrap = document.querySelector('.lp-download-callout-wrap');
   if (dlBtn) {
     if (prospect.download_url) {
-      dlBtn.querySelector('span').textContent = `List for ${firstName || 'You'}`;
+      document.getElementById('lp-download-btn-text').textContent = `List for ${firstName || 'You'}`;
       dlBtn.style.display = '';
       const callout = calloutWrap ? calloutWrap.querySelector('.lp-download-callout') : null;
       if (callout) callout.style.display = '';
 
       dlBtn.addEventListener('click', e => {
         e.preventDefault();
-        window.open(prospect.download_url, '_blank', 'noopener,noreferrer');
-        openDlModal();
+        if (dlBtn.classList.contains('lp-download-btn--counting')) return;
+        if (dlBtn.classList.contains('lp-download-btn--ready')) {
+          window.open(prospect.download_url, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        startDlTimer(prospect.download_url, firstName);
       });
     }
   }
