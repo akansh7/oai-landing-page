@@ -1,4 +1,4 @@
-function startDlTimer(downloadUrl, firstName) {
+function startDlTimer(firstName) {
   const btn = document.getElementById('lp-download-btn');
   const btnText = document.getElementById('lp-download-btn-text');
   const status = document.getElementById('lp-dl-status');
@@ -31,7 +31,41 @@ function startDlTimer(downloadUrl, firstName) {
   }, 1000);
 }
 
-function renderPage(prospect) {
+// ─── List → Excel (.xlsx) ─────────────────────────
+const PEOPLE_COLS = [
+  { key: 'name', label: 'Name' },
+  { key: 'company_name', label: 'Company Name' },
+  { key: 'job_title', label: 'Job Title' },
+  { key: 'linkedin', label: 'LinkedIn' },
+];
+
+const COMPANY_COLS = [
+  { key: 'company_name', label: 'Company Name' },
+  { key: 'job_title', label: 'Job Title' },
+  { key: 'job_type', label: 'Job Type' },
+  { key: 'job_description', label: 'Job Description' },
+  { key: 'city', label: 'City' },
+  { key: 'state', label: 'State' },
+  { key: 'country', label: 'Country' },
+  { key: 'job_url', label: 'Job URL' },
+  { key: 'salary_info', label: 'Salary Info' },
+  { key: 'skills', label: 'Skills' },
+];
+
+function sheetFromRows(rows, cols) {
+  const aoa = [cols.map(c => c.label), ...rows.map(r => cols.map(c => r[c.key] ?? ''))];
+  return XLSX.utils.aoa_to_sheet(aoa);
+}
+
+function buildAndDownloadXlsx(prospect, companies, people) {
+  const wb = XLSX.utils.book_new();
+  if (companies.length) XLSX.utils.book_append_sheet(wb, sheetFromRows(companies, COMPANY_COLS), 'Companies');
+  if (people.length) XLSX.utils.book_append_sheet(wb, sheetFromRows(people, PEOPLE_COLS), 'People');
+  const base = (prospect.company_name || prospect.name || 'Your').trim();
+  XLSX.writeFile(wb, `${base} - List.xlsx`);
+}
+
+function renderPage(prospect, companies = [], people = []) {
   const fullName = prospect.name?.trim();
   const firstName = fullName ? fullName.split(' ')[0] : null;
   const company = prospect.company_name?.trim();
@@ -64,8 +98,9 @@ function renderPage(prospect) {
   // Download button
   const dlBtn = document.getElementById('lp-download-btn');
   const calloutWrap = document.querySelector('.lp-download-callout-wrap');
+  const hasList = companies.length > 0 || people.length > 0;
   if (dlBtn) {
-    if (prospect.download_url) {
+    if (hasList || prospect.download_url) {
       document.getElementById('lp-download-btn-text').textContent = `List for ${firstName || 'You'}`;
       dlBtn.style.display = '';
       const callout = calloutWrap ? calloutWrap.querySelector('.lp-download-callout') : null;
@@ -75,10 +110,11 @@ function renderPage(prospect) {
         e.preventDefault();
         if (dlBtn.classList.contains('lp-download-btn--counting')) return;
         if (dlBtn.classList.contains('lp-download-btn--ready')) {
-          window.open(prospect.download_url, '_blank', 'noopener,noreferrer');
+          if (hasList) buildAndDownloadXlsx(prospect, companies, people);
+          else if (prospect.download_url) window.open(prospect.download_url, '_blank', 'noopener,noreferrer');
           return;
         }
-        startDlTimer(prospect.download_url, firstName);
+        startDlTimer(firstName);
       });
     }
   }
@@ -104,6 +140,14 @@ function makeFallbackName(name) {
 }
 
 
+async function fetchList(table, listId) {
+  const res = await fetch(
+    `${window.SUPABASE_URL}/rest/v1/${table}?list_id=eq.${encodeURIComponent(listId)}&select=*`,
+    { headers: { 'apikey': window.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}` } }
+  );
+  return res.ok ? await res.json() : [];
+}
+
 (async () => {
   const id = new URLSearchParams(window.location.search).get('id');
 
@@ -118,7 +162,12 @@ function makeFallbackName(name) {
 
     const data = res.ok ? await res.json() : [];
     const prospect = data?.[0] || {};
-    renderPage(prospect);
+
+    const [companies, people] = prospect.list_id
+      ? await Promise.all([fetchList('companies', prospect.list_id), fetchList('people', prospect.list_id)])
+      : [[], []];
+
+    renderPage(prospect, companies, people);
 
     // Track visit only for real prospects
     if (prospect.id) {

@@ -30,6 +30,7 @@ function showDashboard() {
   document.getElementById('adm-dashboard').style.display = 'block';
   loadProspects();
   renderCurlBlock();
+  renderUploadBlocks(genListId());
 }
 
 function renderCurlBlock() {
@@ -53,6 +54,59 @@ function copyCurl() {
   const text = document.getElementById('adm-curl-block').textContent;
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById('adm-copy-curl');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+
+// ─── List data upload reference ───────────────────
+
+function genListId() {
+  const bytes = crypto.getRandomValues(new Uint8Array(12));
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  return Array.from(bytes, b => chars[b % 36]).join('').slice(0, 12);
+}
+
+function fillListId() {
+  document.getElementById('form-list-id').value = genListId();
+}
+
+function peopleCurl(listId) {
+  return `curl -X POST '${window.SUPABASE_URL}/rest/v1/people' \\
+  -H 'apikey: ${window.SUPABASE_ANON_KEY}' \\
+  -H 'Authorization: Bearer ${window.SUPABASE_ANON_KEY}' \\
+  -H 'Content-Type: application/json' \\
+  -H 'Prefer: return=minimal' \\
+  -d '[
+    {"list_id": "${listId}", "name": "Steve Randall", "company_name": "T3", "job_title": "Director", "linkedin": "https://linkedin.com/in/steve"}
+  ]'`;
+}
+
+function companiesCurl(listId) {
+  return `curl -X POST '${window.SUPABASE_URL}/rest/v1/companies' \\
+  -H 'apikey: ${window.SUPABASE_ANON_KEY}' \\
+  -H 'Authorization: Bearer ${window.SUPABASE_ANON_KEY}' \\
+  -H 'Content-Type: application/json' \\
+  -H 'Prefer: return=minimal' \\
+  -d '[
+    {"list_id": "${listId}", "company_name": "Acme Corp", "job_title": "Backend Engineer", "job_type": "Full-time", "job_description": "Build APIs", "city": "Austin", "state": "TX", "country": "USA", "job_url": "https://acme.com/jobs/1", "salary_info": "$140k-$170k", "skills": "Go, Postgres, AWS"}
+  ]'`;
+}
+
+function renderUploadBlocks(listId) {
+  document.getElementById('adm-upload-list-id').textContent = listId;
+  document.getElementById('adm-people-block').textContent = peopleCurl(listId);
+  document.getElementById('adm-companies-block').textContent = companiesCurl(listId);
+}
+
+function newUploadListId() {
+  renderUploadBlocks(genListId());
+}
+
+function copyBlock(blockId, btnId) {
+  const text = document.getElementById(blockId).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
     btn.textContent = '✓ Copied!';
     setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
   });
@@ -167,6 +221,7 @@ function openModal(id = null) {
   document.getElementById('form-name').value = '';
   document.getElementById('form-company').value = '';
   document.getElementById('form-logo').value = '';
+  document.getElementById('form-list-id').value = '';
   document.getElementById('form-download-url').value = '';
 
   if (id) {
@@ -177,6 +232,7 @@ function openModal(id = null) {
     document.getElementById('form-name').value = p.name || '';
     document.getElementById('form-company').value = p.company_name || '';
     document.getElementById('form-logo').value = p.logo_url || '';
+    document.getElementById('form-list-id').value = p.list_id || '';
     document.getElementById('form-download-url').value = p.download_url || '';
   } else {
     title.textContent = 'New Prospect';
@@ -199,6 +255,7 @@ async function saveProspect() {
   const name = document.getElementById('form-name').value.trim();
   const company_name = document.getElementById('form-company').value.trim();
   const logo_url = document.getElementById('form-logo').value.trim() || null;
+  const list_id = document.getElementById('form-list-id').value.trim() || null;
   const download_url = document.getElementById('form-download-url').value.trim() || null;
 
   if (!name && !company_name && !logo_url) {
@@ -211,7 +268,7 @@ async function saveProspect() {
   saveBtn.disabled = true;
 
   try {
-    const payload = { name, company_name, logo_url, download_url };
+    const payload = { name, company_name, logo_url, list_id, download_url };
 
     if (id) {
       await sbFetch(`prospects?id=eq.${id}`, {

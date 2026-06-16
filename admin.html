@@ -87,6 +87,40 @@
         </div>
       </div>
 
+      <!-- List Data Upload -->
+      <div class="adm-card adm-api-card">
+        <div class="adm-card-header">
+          <span class="adm-card-title">List Data Upload</span>
+          <button class="adm-btn adm-btn-primary" onclick="newUploadListId()" style="font-size:13px;padding:7px 14px">Generate List ID</button>
+        </div>
+        <div class="adm-api-note">
+          Shared <strong>List ID</strong>: <code id="adm-upload-list-id">—</code><br />
+          Tag every uploaded row with this <code>list_id</code>, then paste the same value into a prospect's <strong>List ID</strong> field to link it. The cURL commands below are pre-filled with it (send an array to insert many rows at once).
+        </div>
+      </div>
+
+      <!-- Upload People rows -->
+      <div class="adm-card adm-api-card">
+        <div class="adm-card-header">
+          <span class="adm-card-title">Upload People rows via API (cURL)</span>
+          <button class="adm-btn adm-btn-ghost" id="adm-copy-people" onclick="copyBlock('adm-people-block','adm-copy-people')" style="font-size:13px;padding:7px 14px">Copy</button>
+        </div>
+        <div class="adm-api-body">
+          <pre id="adm-people-block"></pre>
+        </div>
+      </div>
+
+      <!-- Upload Company rows -->
+      <div class="adm-card adm-api-card">
+        <div class="adm-card-header">
+          <span class="adm-card-title">Upload Company rows via API (cURL)</span>
+          <button class="adm-btn adm-btn-ghost" id="adm-copy-companies" onclick="copyBlock('adm-companies-block','adm-copy-companies')" style="font-size:13px;padding:7px 14px">Copy</button>
+        </div>
+        <div class="adm-api-body">
+          <pre id="adm-companies-block"></pre>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -112,7 +146,14 @@
           <input type="url" id="form-logo" class="adm-input" placeholder="https://acme.com/logo.png" />
         </div>
         <div class="adm-form-group">
-          <label class="adm-label">Download URL <span>(optional — shows "List for Name" button)</span></label>
+          <label class="adm-label">List ID <span>(links to companies / people rows — downloads as .xlsx)</span></label>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="form-list-id" class="adm-input" placeholder="ab12cd34ef56" style="flex:1" />
+            <button type="button" class="adm-btn adm-btn-ghost" onclick="fillListId()" style="white-space:nowrap">Generate</button>
+          </div>
+        </div>
+        <div class="adm-form-group">
+          <label class="adm-label">Download URL <span>(optional — fallback link used only if no List ID rows)</span></label>
           <input type="url" id="form-download-url" class="adm-input" placeholder="https://docs.google.com/..." />
         </div>
       </div>
